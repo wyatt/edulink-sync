@@ -4,6 +4,10 @@ A NodeJS based syncing tool for EduLink One and Google Calendar.
 ### Inspiration
 I decided to make this program as I wanted to view all of my classes in a more cohesive way by using Google Calendar to sync accross many devices, operating systems and apps. This project will likely expand in the future with support for homework syncing once summer break is over.
 
+### Tools used
+- ⌨ Typescript: Includes detailed and complex type definitions for EduLink responses
+- 💾 Redis: Caches data to avoid constant fetching and increase efficiency.
+
 ### Usage
 1. Install and run `redis` in a docker container. Explaining how to do that is outside the scope of this project but the general command is `docker run -p 56379:6379 -d redis`
 1. Configure your env variables - See below
