@@ -18,7 +18,7 @@ const timetableBar = new cliProgress.SingleBar(
 
 const timetableSync = async () => {
 	const timetable = await wrapRedis<Timetable>('timetable', () => edulinkFetch<Timetable>('Timetable', timetableParams), 3600);
-	GoogleOauth(async calendar => {
+	return GoogleOauth(async calendar => {
 		const existingEvents = await calendar.events.list({
 			calendarId: env.calendarId,
 			timeMin: dayjs().toISOString(),
@@ -88,5 +88,5 @@ const timetableSync = async () => {
 	console.log('Redis connnecting...');
 	console.log('Redis connected.');
 	await timetableSync();
-	process.exit(0);
+	//process.exit(0);
 })();
