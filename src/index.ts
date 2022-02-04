@@ -1,4 +1,4 @@
-import {redis, wrapRedis} from './util/wrap-redis';
+
 import {edulinkFetch} from './util/fetch';
 import {Timetable} from './types/edulink/timetable';
 import {GoogleOauth} from './util/google/google';
@@ -17,7 +17,6 @@ const timetableBar = new cliProgress.SingleBar(
 );
 
 const timetableSync = async () => {
-	const timetable = await wrapRedis<Timetable>('timetable', () => edulinkFetch<Timetable>('Timetable', timetableParams), 3600);
 	return GoogleOauth(async calendar => {
 		const existingEvents = await calendar.events.list({
 			calendarId: env.calendarId,
@@ -26,7 +25,7 @@ const timetableSync = async () => {
 			orderBy: 'startTime',
 			singleEvents: true,
 		});
-		let edulinkArray = timetable.weeks
+		let edulinkArray = (await edulinkFetch<Timetable>('Timetable', timetableParams)).data.weeks
 			.map(week => week.days)
 			.flat(1)
 			.map(day => {
@@ -85,8 +84,5 @@ const timetableSync = async () => {
 };
 
 (async () => {
-	console.log('Redis connnecting...');
-	console.log('Redis connected.');
 	await timetableSync();
-	//process.exit(0);
 })();

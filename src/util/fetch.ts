@@ -7,7 +7,7 @@ import fetch, {Headers} from 'node-fetch';
 export const headers = {
 	'accept': 'application/json, text/plain, */*',
 	'accept-language': 'en-US,en;q=0.9',
-	'content-type': 'application/json;charset=UTF-8',
+	'Content-Type': 'application/json',
 	'sec-fetch-dest': 'empty',
 	'sec-fetch-mode': 'cors',
 	'sec-fetch-site': 'same-origin',
@@ -15,7 +15,7 @@ export const headers = {
 
 export const edulinkFetch = async <T extends PositiveResponseDefaults>(endpoint: EdulinkEndpoint, params: Record<string, any>) => {
 	const response: EdulinkResponse<T> = await fetch(`https://${env.school}.edulinkone.com/api/`, {
-		headers: {...headers, 'Authorization': `Bearer ${await token}`, 'X-API-Method': `EduLink.${endpoint}`},
+		headers: {...headers, 'Authorization': `Bearer ${(await token()).data}`, 'X-API-Method': `EduLink.${endpoint}`},
 		method: 'POST',
 		body: JSON.stringify({
 			jsonrpc: '2.0',

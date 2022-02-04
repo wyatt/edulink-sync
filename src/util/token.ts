@@ -1,4 +1,3 @@
-import {wrapRedis} from './wrap-redis';
 import {env} from './env';
 import {headers} from './fetch';
 import {EdulinkResponse} from '../types/edulink/global';
@@ -26,4 +25,4 @@ async function login() {
 	return {data: response.result.authtoken, expiry: response.result.session.expires};
 }
 
-export const token = wrapRedis('token', login);
+export const token = login
